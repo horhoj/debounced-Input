@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import {FC, useState} from 'react';
 import './App.css';
-import DebouncedInput from "./DebouncedInput";
+import {DebouncedInput} from "./DebouncedInput";
 
-function App() {
+export const App: FC = () => {
   const [value, setValue] = useState('');
-
   return (
     <div className="container">
       <div className="mb-5">value: {value}</div>
       <DebouncedInput
         onChange={setValue}
         value={value}
+        timeout={600}
       />
       <div>
         <button
@@ -24,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+

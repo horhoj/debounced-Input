@@ -1,3 +1,1 @@
-import DebouncedInput from "./DebouncedInput";
-
-export default DebouncedInput;
+export * from './DebouncedInput';

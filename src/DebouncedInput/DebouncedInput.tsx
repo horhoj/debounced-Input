@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {IDebouncedInputProps} from "./types";
+import {ChangeEvent, FC, useEffect, useState} from "react";
+import {IDebouncedInputProps, TimeoutID} from "./types";
 
-const DebouncedInput: React.FC<IDebouncedInputProps> = ({value, onChange}): JSX.Element => {
+export const DebouncedInput: FC<IDebouncedInputProps> = ({value, onChange, timeout}) => {
 
   const [internalValue, setInternalValue] = useState<string>('');
-  const [globalIntervalId, setGlobalIntervalId] = useState<any>(null);
+  const [globalIntervalId, setGlobalIntervalId] = useState<TimeoutID>(null);
 
   useEffect(() => {
-    let intervalId: any = null;
-    intervalId = setTimeout(() => {
+    const intervalId: TimeoutID = setTimeout(() => {
       onChange(internalValue);
-    }, 600);
+    }, timeout);
     setGlobalIntervalId(intervalId);
     return () => {
       clearInterval(intervalId);
@@ -18,14 +17,12 @@ const DebouncedInput: React.FC<IDebouncedInputProps> = ({value, onChange}): JSX.
   }, [internalValue]);
 
   useEffect(() => {
-    clearInterval(globalIntervalId);
+    if (globalIntervalId) clearInterval(globalIntervalId);
     setInternalValue(value);
-  }, [value])
+  }, [value]);
 
-  const inputHandle = (e: React.SyntheticEvent) => {
-    const value = (e.target as HTMLInputElement).value;
-    setInternalValue(value);
-  }
+  const inputHandle = (e: ChangeEvent<HTMLInputElement>) => setInternalValue(e.target.value);
+
 
   return (
     <div>
@@ -39,4 +36,3 @@ const DebouncedInput: React.FC<IDebouncedInputProps> = ({value, onChange}): JSX.
   )
 }
 
-export default DebouncedInput;
