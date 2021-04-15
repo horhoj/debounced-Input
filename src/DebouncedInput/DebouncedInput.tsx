@@ -1,8 +1,11 @@
-import {ChangeEvent, FC, useEffect, useState} from "react";
-import {IDebouncedInputProps, TimeoutID} from "./types";
+import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { DebouncedInputProps, TimeoutID } from './types';
 
-export const DebouncedInput: FC<IDebouncedInputProps> = ({value, onChange, timeout}) => {
-
+export const DebouncedInput: FC<DebouncedInputProps> = ({
+  value,
+  onChange,
+  timeout,
+}) => {
   const [internalValue, setInternalValue] = useState<string>('');
   const [globalIntervalId, setGlobalIntervalId] = useState<TimeoutID>(null);
 
@@ -21,8 +24,8 @@ export const DebouncedInput: FC<IDebouncedInputProps> = ({value, onChange, timeo
     setInternalValue(value);
   }, [value]);
 
-  const inputHandle = (e: ChangeEvent<HTMLInputElement>) => setInternalValue(e.target.value);
-
+  const inputHandle = (e: ChangeEvent<HTMLInputElement>) =>
+    setInternalValue(e.target.value);
 
   return (
     <div>
@@ -33,6 +36,5 @@ export const DebouncedInput: FC<IDebouncedInputProps> = ({value, onChange, timeo
         value={internalValue}
       />
     </div>
-  )
-}
-
+  );
+};
