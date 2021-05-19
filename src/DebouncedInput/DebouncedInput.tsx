@@ -17,11 +17,14 @@ export const DebouncedInput: FC<DebouncedInputProps> = ({
     return () => {
       clearInterval(intervalId);
     };
-  }, [internalValue]);
+  }, [internalValue, onChange, timeout]);
 
   useEffect(() => {
-    if (globalIntervalId) clearInterval(globalIntervalId);
+    if (globalIntervalId) {
+      clearInterval(globalIntervalId);
+    }
     setInternalValue(value);
+    // eslint-disable-next-line
   }, [value]);
 
   const inputHandle = (e: ChangeEvent<HTMLInputElement>) =>
